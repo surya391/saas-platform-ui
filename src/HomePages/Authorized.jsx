@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setToken } from "../slices/authSlice";
 
 function Authorized() {
   const navigate = useNavigate();
@@ -15,12 +14,11 @@ function Authorized() {
 
     if (!idToken) {
       console.error("No token found in URL");
-      navigate("/login");
+      navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login");
       return;
     }
 
-    sessionStorage.setItem("id_token", idToken);
-    dispatch(setToken(idToken));
+    // sessionStorage.setItem("id_token", idToken);
 
     // Verify token by calling backend
     fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
@@ -30,6 +28,7 @@ function Authorized() {
       },
     })
       .then((response) => {
+        console.log("response",response)
         if (!response.ok) {
           throw new Error(`Unauthorized access: ${response.status}`);
         }

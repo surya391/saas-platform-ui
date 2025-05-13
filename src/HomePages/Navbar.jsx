@@ -90,7 +90,7 @@ export default function Navbar() {
         <a href="#plans" className="text-white text-xl hover:text-blue-400">Plans</a>
         <a href="#home" className="text-white text-xl hover:text-blue-400">Home</a>
         <Link
-          to="https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login"
+          to="/login"
           className="block bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer"
         >
           Login
