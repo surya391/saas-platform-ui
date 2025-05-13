@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // Landing page components
 import Navbar from "./HomePages/Navbar";
@@ -39,7 +39,15 @@ export default function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/authorized" element={<Authorized />} />
-      <Route path="/dashboard"element={<ProtectedRoute><Dashboard /> </ProtectedRoute>}      />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      {/* Optional fallback for unmatched routes */}
       {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
     </Routes>
   );

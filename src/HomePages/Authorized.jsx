@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-// Optional: if you have an authSlice to manage the token globally
-// import { setToken } from "../slices/authSlice";
+// Optional: import { setToken } from "../slices/authSlice";
 
 const Authorized = () => {
   const navigate = useNavigate();
@@ -10,12 +9,13 @@ const Authorized = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const token = searchParams.get("token");
+    const token = searchParams.get("token") || searchParams.get("code");
+
+    console.log("Extracted token/code from URL:", token);
 
     if (token) {
       sessionStorage.setItem("id_token", token);
-      // Optional: dispatch to Redux store
-      // dispatch(setToken(token));
+      // Optional: dispatch(setToken(token));
 
       fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
         method: "GET",
@@ -36,7 +36,7 @@ const Authorized = () => {
           navigate("/login");
         });
     } else {
-      console.warn("Token not found in URL");
+      console.warn("Token/code not found in URL");
       navigate("/login");
     }
   }, [navigate, dispatch]);
