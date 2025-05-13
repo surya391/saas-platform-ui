@@ -89,12 +89,12 @@ export default function Navbar() {
         <a href="#features" className="text-white text-xl hover:text-blue-400">Features</a>
         <a href="#plans" className="text-white text-xl hover:text-blue-400">Plans</a>
         <a href="#home" className="text-white text-xl hover:text-blue-400">Home</a>
-        <a
-          href="https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login"
+        <Link
+          to="https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login"
           className="block bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer"
         >
           Login
-        </a>
+        </Link>
       </div>
 
       {/* Mobile hamburger */}
