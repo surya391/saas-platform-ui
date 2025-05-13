@@ -12,34 +12,33 @@ function Authorized() {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const idToken = searchParams.get("token");
-
+  
     if (!idToken) {
       console.error("No token found in URL");
       navigate("/login");
       return;
     }
-
-    // Store token
+  
     sessionStorage.setItem("id_token", idToken);
     dispatch(setToken(idToken));
-
+  
     // Verify token by calling backend
     fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
       method: "GET",
       headers: {
-        Authorization: idToken,
+        Authorization: `Bearer ${idToken}`,  // Bearer token instead of passing directly
       },
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unauthorized access");
+          throw new Error(`Unauthorized access: ${response.status}`);
         }
         return response.json();
       })
       .then((data) => {
         console.log("API Response:", data);
-
-        // Redirect to dashboard with token in the URL
+  
+        // Redirect to dashboard
         navigate(`https://thankful-smoke-00bff5800.6.azurestaticapps.net/dashboard?token=${idToken}`);
       })
       .catch((error) => {
@@ -47,6 +46,7 @@ function Authorized() {
         navigate("/error"); // or /login if preferred
       });
   }, [location.search, navigate, dispatch]);
+  
 
   return <div>Processing login, please wait...</div>;
 }
