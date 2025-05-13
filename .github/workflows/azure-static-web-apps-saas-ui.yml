@@ -1,4 +1,35 @@
+name: Azure Static Web Apps CI/CD
+
 on:
   push:
     branches:
-      - main  # or 'master' or whatever branch you’ve configured
+      - main  # or 'master' or any branch you use for deployment
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Adjust if you use a different version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the app
+        run: npm run build  # Use "npm run build" or "vite build" based on your project
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}  # Needed for comment deployment status
+          action: "upload"
+          app_location: "/"  # Root of your app source code
+          api_location: null  # Set if using Azure Functions
+          output_location: "dist"  # Use "build" if using Create React App (CRA)
