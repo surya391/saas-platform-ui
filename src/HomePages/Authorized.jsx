@@ -1,51 +1,26 @@
-import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setToken } from "../slices/authSlice";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Authorized() {
+const Authorized = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const idToken = searchParams.get("token");
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
 
-    if (!idToken) {
-      console.error("No token found in URL");
+    if (token) {
+      sessionStorage.setItem("id_token", token);
+      navigate("/dashboard");
+    } else {
       navigate("/login");
-      return;
     }
+  }, [navigate]);
 
-    // Store token
-    sessionStorage.setItem("id_token", idToken);
-    dispatch(setToken(idToken));
-
-    // Verify token by calling backend
-    fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
-      method: "GET",
-      headers: {
-        Authorization: idToken,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Unauthorized access");
-        return response.json();
-      })
-      .then(() => {
-        navigate("/dashboard");//, { replace: true }
-      })
-      .catch((error) => {
-        console.error("Authorization failed:", error);
-        navigate("/login");
-      });
-  }, [location.search, navigate, dispatch]);
-
-  return <div>Processing login, please wait...</div>;
-}
+  return <div>Redirecting...</div>;
+};
 
 export default Authorized;
+
 
 
 
