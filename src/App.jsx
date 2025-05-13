@@ -7,11 +7,14 @@ import Home from "./HomePages/Home";
 import Plan from "./HomePages/Plan";
 import Features from "./HomePages/Features";
 import Footer from "./HomePages/Footer";
-import Login from "./HomePages/Login";
 
+import Profile from "./HomePages/Profile";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// Pages
 import Authorized from "./HomePages/Authorized";
 import Dashboard from "./HomePages/userPages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 function LandingPage() {
   return (
@@ -37,22 +40,16 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
       <Route path="/authorized" element={<Authorized />} />
+      {/* <Route path="/dashboard" element={ <ProtectedRoute><Dashboard /> </ProtectedRoute> } /> */}
+      {/* <Route path="/dashboard" element={ <Dashboard />  } />  */}
       <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-      {/* Optional fallback for unmatched routes */}
-      {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
-    </Routes>
+        path="/dashboard"  element={ <ProtectedRoute>  <Dashboard />  </ProtectedRoute>}/>
+      {/* <Route path="/login" element={<Login />} /> */}
+      {/* <Route path="/profile" element={<Profile />} /> */}
+      </Routes>
   );
 }
-
 
 
 
