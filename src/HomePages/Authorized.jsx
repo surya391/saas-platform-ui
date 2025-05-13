@@ -40,7 +40,7 @@ function Authorized() {
         console.log("API Response:", data);
 
         // Redirect to dashboard with token in the URL
-        navigate(`/dashboard?token=${idToken}`);
+        navigate(`https://thankful-smoke-00bff5800.6.azurestaticapps.net/dashboard?token=${idToken}`);
       })
       .catch((error) => {
         console.error("Authorization failed:", error);
