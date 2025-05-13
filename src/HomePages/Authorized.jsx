@@ -1,22 +1,47 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// Optional: if you have an authSlice to manage the token globally
+// import { setToken } from "../slices/authSlice";
 
 const Authorized = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
+    const searchParams = new URLSearchParams(window.location.search);
+    const token = searchParams.get("token");
 
     if (token) {
       sessionStorage.setItem("id_token", token);
-      navigate("/dashboard");
+      // Optional: dispatch to Redux store
+      // dispatch(setToken(token));
+
+      fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Unauthorized");
+          return res.json();
+        })
+        .then((data) => {
+          console.log("User authorized:", data);
+          navigate("/dashboard");
+        })
+        .catch((error) => {
+          console.error("Authorization failed:", error);
+          navigate("/login");
+        });
     } else {
+      console.warn("Token not found in URL");
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
-  return <div>Redirecting...</div>;
+  return <div className="text-center mt-10 text-gray-600 text-lg">Processing login...</div>;
 };
 
 export default Authorized;
