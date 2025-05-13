@@ -26,7 +26,7 @@ function Authorized() {
     fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${idToken}`,  // Bearer token instead of passing directly
+        Authorization: `${idToken}`,  // Bearer token instead of passing directly
       },
     })
       .then((response) => {
