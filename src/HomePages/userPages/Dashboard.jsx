@@ -8,58 +8,53 @@ export default function Dashboard() {
   const [userProfile, setUserProfile] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { items: plans, status, error } = useSelector((state) => state.plans);
 
-  // Handle logout
   const handleLogout = () => {
     sessionStorage.removeItem("id_token");
     window.location.href =
       "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
   };
 
-  // Fetch profile data if active tab is "profile"
   useEffect(() => {
+    const token = sessionStorage.getItem("id_token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
     if (activeTab === "profile") {
-      const token = sessionStorage.getItem("id_token");
-      if (token) {
-        fetch(
-          "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized",
-          {
-            method: "GET",
-            headers: {
-              Authorization: token,
-            },
-          }
-        )
-          .then((res) => {
-            if (!res.ok) throw new Error("Failed to fetch user profile");
-            return res.json();
-          })
-          .then((data) => setUserProfile(data))
-          .catch((err) => {
-            console.error(err);
-            setUserProfile(null);
-          });
-      }
+      fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch user profile");
+          return res.json();
+        })
+        .then((data) => setUserProfile(data))
+        .catch((err) => {
+          console.error(err);
+          setUserProfile(null);
+        });
     } else if (activeTab === "plans") {
       dispatch(getPlans());
     }
-  }, [activeTab, dispatch]);
+  }, [activeTab, dispatch, navigate]);
 
-  // Rendering transformed plans data
-  const transformedPlans =
-    plans && Array.isArray(plans)
-      ? plans.map((plan) => ({
-          plan_name: plan.plan_name,
-          price: plan.price,
-          no_of_contacts: plan.no_of_contacts,
-        }))
-      : [];
+  const transformedPlans = Array.isArray(plans)
+    ? plans.map((plan) => ({
+        plan_name: plan.plan_name,
+        price: plan.price,
+        no_of_contacts: plan.no_of_contacts,
+      }))
+    : [];
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Navbar */}
       <header className="bg-white shadow sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-blue-700">Hire Sense</h1>
@@ -94,7 +89,6 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="flex-1 py-10 px-6 max-w-6xl mx-auto w-full">
         {activeTab === "plans" && (
           <section className="bg-white p-8 rounded-lg shadow-md text-center">
@@ -127,31 +121,29 @@ export default function Dashboard() {
           <section className="bg-white p-8 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your Profile</h2>
             {userProfile ? (
-  Object.entries(userProfile).map(([key, value]) => (
-    <div key={key} className="flex gap-2 mb-2">
-      <span className="font-medium text-gray-600 capitalize">
-        {key.replace(/_/g, " ")}:
-      </span>
-      <span className="text-gray-800">
-        {Array.isArray(value)
-          ? value.join(", ")
-          : typeof value === "object" && value !== null
-          ? JSON.stringify(value)
-          : value?.toString()}
-      </span>
-    </div>
-  ))
-) : (
-  <p className="text-gray-500">Loading profile...</p>
-)}
-
+              Object.entries(userProfile).map(([key, value]) => (
+                <div key={key} className="flex gap-2 mb-2">
+                  <span className="font-medium text-gray-600 capitalize">
+                    {key.replace(/_/g, " ")}:
+                  </span>
+                  <span className="text-gray-800">
+                    {Array.isArray(value)
+                      ? value.join(", ")
+                      : typeof value === "object" && value !== null
+                      ? JSON.stringify(value)
+                      : value?.toString()}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500">Loading profile...</p>
+            )}
           </section>
         )}
       </main>
     </div>
   );
 }
-
 
 
 

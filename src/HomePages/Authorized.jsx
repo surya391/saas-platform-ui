@@ -1,4 +1,3 @@
-// src/HomePages/Authorized.js
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -31,18 +30,15 @@ function Authorized() {
       },
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unauthorized access");
-        }
+        if (!response.ok) throw new Error("Unauthorized access");
         return response.json();
       })
-      .then((data) => {
-        console.log("API Response:", data);
-        navigate("/dashboard");
+      .then(() => {
+        navigate("/dashboard");//, { replace: true }
       })
       .catch((error) => {
         console.error("Authorization failed:", error);
-        navigate("/error"); // or /login if preferred
+        navigate("/login");
       });
   }, [location.search, navigate, dispatch]);
 
@@ -50,6 +46,7 @@ function Authorized() {
 }
 
 export default Authorized;
+
 
 
 
