@@ -12,21 +12,21 @@ function Authorized() {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const idToken = searchParams.get("token");
-  
+
     if (!idToken) {
       console.error("No token found in URL");
       navigate("/login");
       return;
     }
-  
+
     sessionStorage.setItem("id_token", idToken);
     dispatch(setToken(idToken));
-  
+
     // Verify token by calling backend
     fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
       method: "GET",
       headers: {
-        Authorization: `${idToken}`,  
+        Authorization: `Bearer ${idToken}`,
       },
     })
       .then((response) => {
@@ -37,21 +37,20 @@ function Authorized() {
       })
       .then((data) => {
         console.log("API Response:", data);
-  
-        // Redirect to dashboard
-        navigate(`https://thankful-smoke-00bff5800.6.azurestaticapps.net/dashboard?token=${idToken}`);
+        // Redirect to dashboard after successful verification
+        navigate("/dashboard");
       })
       .catch((error) => {
         console.error("Authorization failed:", error);
         navigate("/error"); // or /login if preferred
       });
   }, [location.search, navigate, dispatch]);
-  
 
   return <div>Processing login, please wait...</div>;
 }
 
 export default Authorized;
+
 
 
 
