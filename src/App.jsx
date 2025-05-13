@@ -1,5 +1,5 @@
 // src/App.js
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./HomePages/Navbar";
 import Home from "./HomePages/Home";
@@ -22,7 +22,10 @@ function LandingPage() {
     </div>
   );
 }
-
+useEffect(()=>{
+  const token = getCookie('token');
+  console.log(token)
+},[])
 export default function App() {
   return (
     <Routes>
