@@ -43,7 +43,7 @@ export default function App() {
     <AuthChecker />
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/authorized" element={<Authorized />} />
+      {/* <Route path="/authorized" element={<Authorized />} /> */}
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       {/* Add other routes as needed */}
     </Routes>

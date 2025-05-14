@@ -21,10 +21,14 @@ import { Navigate } from "react-router-dom";
 export default function ProtectedRoute({ children }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+  // if (!isAuthenticated) {
+  //   window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net";
+  //   return null;
+  // }
+
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
-  
   
 
   return children;

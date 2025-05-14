@@ -20,7 +20,6 @@ export default function AuthChecker() {
   
     } else {
       console.log("No token found.");
-      navigate("/")
     }
   }, [navigate]);
 
