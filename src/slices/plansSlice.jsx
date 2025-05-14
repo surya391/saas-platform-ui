@@ -4,14 +4,11 @@ import axiosInstance from '../utils/axiosInstance'
 import  axios  from "axios";
 
 export const getPlans = createAsyncThunk(
-  "pl ans/getPlans",
+  "plans/getPlans",  
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/v1/subcriptions"
-        // {
-        //   withCredentials: true,
-        // }
       );
       return response.data;
     } catch (error) {
@@ -20,6 +17,7 @@ export const getPlans = createAsyncThunk(
     }
   }
 );
+
   
 
 // 👇 Slice with reducers and async states

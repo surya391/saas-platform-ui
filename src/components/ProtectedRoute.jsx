@@ -1,37 +1,31 @@
-// import { Navigate } from "react-router-dom";
-// import React from 'react'
-// function ProtectedRoute({ children }) {
-//   const token = sessionStorage.getItem("id_token"); // or use another method to check for authentication
-//   if (!token) {
-//     // Redirect them to the login page if not authenticated
-//     return <Navigate to="/login" />;
-//   }
-//   return children; // Allow access to the protected route
-// }
-
-// export default ProtectedRoute;
-
-
-
-// src/components/ProtectedRoute.js
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { login } from "../slices/authSlice"
 
 export default function ProtectedRoute({ children }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
 
-  // if (!isAuthenticated) {
-  //   window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net";
-  //   return null;
-  // }
+  useEffect(() => {
+    const getCookie = (name) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(";").shift();
+      return null;
+    };
+
+    const sessionToken = sessionStorage.getItem("id_token");
+    const cookieToken = getCookie("token");
+
+    if (sessionToken || cookieToken) {
+      dispatch(login()); // set isAuthenticated to true
+    }
+  }, [dispatch]);
 
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
-  
 
   return children;
 }
-
-
