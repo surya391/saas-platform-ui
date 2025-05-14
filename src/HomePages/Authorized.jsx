@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../slices/authSlice"
 export default function AuthChecker() {
+  console.log("login", login)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -13,12 +14,14 @@ export default function AuthChecker() {
       ?.split('=')[1];
 
     const sessionToken = sessionStorage.getItem("id_token");
+console.log('sessionToken', sessionToken)
+console.log('cookieToken', cookieToken)
 
     if (cookieToken || sessionToken) {
       dispatch(login());
       navigate("/dashboard");
     } else {
-      window.location.href = "www.google.com";
+      window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net";
     }
   }, [navigate, dispatch]);
 
