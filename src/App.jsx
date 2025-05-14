@@ -8,7 +8,7 @@ import Plan from "./HomePages/Plan";
 import Features from "./HomePages/Features";
 import Footer from "./HomePages/Footer";
 
-import Profile from "./HomePages/Profile";
+// import Profile from "./HomePages/Profile";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
