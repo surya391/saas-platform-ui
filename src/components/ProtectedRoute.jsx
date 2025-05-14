@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { login } from "../slices/authSlice";
+console.log('log', login)
 
 export default function ProtectedRoute({ children }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getCookie = (name) => {
@@ -19,16 +21,19 @@ export default function ProtectedRoute({ children }) {
     const cookieToken = getCookie("token");
 
     if (sessionToken || cookieToken) {
-      dispatch(login()); // Set isAuthenticated to true in Redux
+      dispatch(login());
     }
+
+    setLoading(false);
   }, [dispatch]);
 
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />; // Redirect to login if not authenticated
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  return children;
+  return isAuthenticated ? children : <Navigate to="/" replace />;
 }
+
 
 // import React, { useEffect } from "react";
 // import { useSelector, useDispatch } from "react-redux";

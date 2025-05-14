@@ -17,7 +17,7 @@ export default function AuthChecker() {
 
     if (!cookieToken && !sessionToken) {
       // Redirect to login page if no token is found
-      window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
+      navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login")
     } else {
       // Redirect to dashboard if authenticated
       navigate("/dashboard");
