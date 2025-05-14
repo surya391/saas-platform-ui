@@ -1,60 +1,60 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../slices/authSlice"
-export default function AuthChecker() {
-  console.log("login", login)
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const cookieToken = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('token='))
-      ?.split('=')[1];
-
-    const sessionToken = sessionStorage.getItem("id_token");
-console.log('sessionToken', sessionToken)
-console.log('cookieToken', cookieToken)
-
-    if (cookieToken || sessionToken) {
-      dispatch(login());
-      // navigate("/dashboard");
-    } else {
-      window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net";
-    }
-  }, [navigate]);
-  return null;
-}
-
-
 // import React, { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
-
+// import { useDispatch } from "react-redux";
+// import { login } from "../slices/authSlice"
 // export default function AuthChecker() {
+//   console.log("login", login)
 //   const navigate = useNavigate();
+//   const dispatch = useDispatch();
 
 //   useEffect(() => {
-//     // Check cookie
 //     const cookieToken = document.cookie
 //       .split('; ')
 //       .find(row => row.startsWith('token='))
 //       ?.split('=')[1];
 
-//     // Check sessionStorage
 //     const sessionToken = sessionStorage.getItem("id_token");
+// console.log('sessionToken', sessionToken)
+// console.log('cookieToken', cookieToken)
 
 //     if (cookieToken || sessionToken) {
-//       dispatch(setAuthenticated(true)); 
-//       navigate("/dashboard");
+//       dispatch(login());
+//       // navigate("/dashboard");
 //     } else {
-//       window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
-//       console.log("No token found.");
+//       window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net";
 //     }
 //   }, [navigate]);
-
-//   return null; 
+//   return null;
 // }
+
+
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function AuthChecker() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check cookie
+    const cookieToken = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('token='))
+      ?.split('=')[1];
+
+    // Check sessionStorage
+    const sessionToken = sessionStorage.getItem("id_token");
+
+    if (cookieToken || sessionToken) {
+      dispatch(setAuthenticated(true)); 
+      navigate("/dashboard");
+    } else {
+      window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
+      console.log("No token found.");
+    }
+  }, [navigate]);
+
+  return null; 
+}
 
 
 
