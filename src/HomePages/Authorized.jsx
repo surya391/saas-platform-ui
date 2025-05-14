@@ -23,8 +23,7 @@ console.log('cookieToken', cookieToken)
     } else {
       window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net";
     }
-  }, [navigate, dispatch]);
-
+  }, [navigate]);
   return null;
 }
 
