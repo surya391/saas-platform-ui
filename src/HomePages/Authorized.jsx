@@ -1,32 +1,31 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux"; // ✅ import this
-import {login} from '../slices/authSlice'
 
 export default function AuthChecker() {
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // ✅ get dispatch
 
   useEffect(() => {
+    // Check cookie
     const cookieToken = document.cookie
       .split('; ')
       .find(row => row.startsWith('token='))
       ?.split('=')[1];
 
+    // Check sessionStorage
     const sessionToken = sessionStorage.getItem("id_token");
 
     if (cookieToken || sessionToken) {
-      dispatch(login()); // ✅ this now works
+      dispatch(setAuthenticated(true)); 
       navigate("/dashboard");
+  
     } else {
       console.log("No token found.");
-      navigate("/");
+      navigate("/")
     }
-  }, [navigate, dispatch]);
+  }, [navigate]);
 
-  return null;
+  return null; 
 }
-
 
 
 
