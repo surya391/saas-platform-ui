@@ -15,8 +15,9 @@ export default function AuthChecker() {
     const sessionToken = sessionStorage.getItem("id_token");
 
     if (cookieToken || sessionToken) {
-      console.log("User authenticated. Navigating to dashboard...");
-      navigate("https://salmon-rock-00d71e400.6.azurestaticapps.net/dashboard");
+      dispatch(setAuthenticated(true)); // your auth slice action
+      navigate("/dashboard");
+  
     } else {
       console.log("No token found.");
     }
