@@ -40,8 +40,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      {/* <Route path="/dashboard" element={ <Dashboard />  } />  */}
-      <Route path="/dashboard"  element={ <ProtectedRoute>  <Dashboard />  </ProtectedRoute>}/>
+      <Route path="/dashboard" element={ <Dashboard />  } /> 
+      {/* <Route path="/dashboard"  element={ <ProtectedRoute>  <Dashboard />  </ProtectedRoute>}/> */}
 
       </Routes>
   );
