@@ -19,7 +19,7 @@ console.log('cookieToken', cookieToken)
 
     if (cookieToken || sessionToken) {
       dispatch(login());
-      navigate("/dashboard");
+      // navigate("/dashboard");
     } else {
       window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net";
     }
