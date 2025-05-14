@@ -13,7 +13,7 @@ function Authorized() {
 
     if (!idToken) {
       console.error("No token found in URL");
-      navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login");
+      navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net");
       return;
     }
 

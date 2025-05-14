@@ -42,7 +42,7 @@ export default function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/authorized" element={<Authorized />} />
       {/* <Route path="/dashboard" element={ <Dashboard />  } />  */}
-      <Route path="https://salmon-rock-00d71e400.6.azurestaticapps.net/dashboard"  element={ <ProtectedRoute>  <Dashboard />  </ProtectedRoute>}/>
+      <Route path="/dashboard"  element={ <ProtectedRoute>  <Dashboard />  </ProtectedRoute>}/>
       {/* <Route path="/login" element={<Login />} /> */}
       {/* <Route path="/profile" element={<Profile />} /> */}
       </Routes>
