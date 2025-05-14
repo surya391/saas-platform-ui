@@ -18,6 +18,7 @@ export default function AuthChecker() {
       dispatch(setAuthenticated(true)); 
       navigate("/dashboard");
     } else {
+      navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login")
       console.log("No token found.");
     }
   }, [navigate]);
