@@ -18,7 +18,7 @@ function Authorized() {
       return;
     }
 
-    // sessionStorage.setItem("id_token", idToken);
+    sessionStorage.setItem("id_token", idToken);
 
     // Verify token by calling backend
     fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
@@ -28,7 +28,6 @@ function Authorized() {
       },
     })
       .then((response) => {
-        console.log("response",response)
         if (!response.ok) {
           throw new Error(`Unauthorized access: ${response.status}`);
         }
