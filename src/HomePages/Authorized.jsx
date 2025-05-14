@@ -44,16 +44,21 @@ export default function AuthChecker() {
     // Check sessionStorage
     const sessionToken = sessionStorage.getItem("id_token");
 
-    if (cookieToken || sessionToken) {
-      dispatch(setAuthenticated(true)); 
-      navigate("/dashboard");
-    } else {
-      window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
-      console.log("No token found.");
+    if (!cookieToken && !sessionToken) {
+      console.log("No token found, redirecting to login...");
+      navigate("/dashboard") // Replace with your actual login route 
     }
   }, [navigate]);
+  // if (cookieToken || sessionToken) {
+  //   dispatch(setAuthenticated(true)); 
+  //   navigate("/dashboard");
+  // } else {
+  //   window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
+  //   console.log("No token found.");
+  // }
+  // }, [navigate]);
 
-  return null; 
+  return null;
 }
 
 
@@ -98,7 +103,7 @@ export default function AuthChecker() {
 //       })
 //       .then((data) => {
 //         console.log("API Response:", data);
-//         dispatch(login()); 
+//         dispatch(login());
 //         navigate("/dashboard");
 //       })
 //       .catch((error) => {
