@@ -44,8 +44,8 @@ export default function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       {/* <Route path="/authorized" element={<Authorized />} /> */}
-      {/* <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} /> */}
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      {/* <Route path="/dashboard" element={<Dashboard />} /> */}
 
       {/* Add other routes as needed */}
     </Routes>
