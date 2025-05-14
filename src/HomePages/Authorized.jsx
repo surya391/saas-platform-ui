@@ -18,7 +18,7 @@ export default function AuthChecker() {
       dispatch(login());
       navigate("/dashboard");
     } else {
-      window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
+      window.location.href = "www.google.com";
     }
   }, [navigate, dispatch]);
 
