@@ -16,7 +16,7 @@ export default function AuthChecker() {
 
     if (cookieToken || sessionToken) {
       console.log("User authenticated. Navigating to dashboard...");
-      navigate("/dashboard");
+      navigate("https://salmon-rock-00d71e400.6.azurestaticapps.net/dashboard");
     } else {
       console.log("No token found.");
     }
