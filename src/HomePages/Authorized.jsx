@@ -36,17 +36,23 @@ export default function AuthChecker() {
 
   useEffect(() => {
     // Check cookie
-    const cookieToken = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('token='))
-      ?.split('=')[1];
+    // const cookieToken = document.cookie
+    //   .split('; ')
+    //   .find(row => row.startsWith('token='))
+    //   ?.split('=')[1];
 
-    // Check sessionStorage
-    const sessionToken = sessionStorage.getItem("id_token");
-
-    if (!cookieToken && !sessionToken) {
-      console.log("No token found, redirecting to login...");
-      navigate("/dashboard") // Replace with your actual login route 
+    // // Check sessionStorage
+    // const sessionToken = sessionStorage.getItem("id_token");
+    const getCookie = (name) => {
+       const value = `; ${document.cookie}`; 
+       const parts = value.split(`; ${name}=`); 
+       if (parts.length === 2) return parts.pop().split(";").shift(); 
+       return null; };
+       const cookieToken = getCookie("token");
+        const sessionToken = sessionStorage.getItem("id_token");
+    if (!sessionToken && !cookieToken) {
+      console.log("No token f ound, redirecting to login...");
+      navigate("/dashboard") 
     }
   }, [navigate]);
   // if (cookieToken || sessionToken) {
