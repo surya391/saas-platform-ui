@@ -17,7 +17,6 @@ export default function AuthChecker() {
     if (cookieToken || sessionToken) {
       dispatch(setAuthenticated(true)); 
       navigate("/dashboard");
-  
     } else {
       console.log("No token found.");
     }
@@ -25,6 +24,7 @@ export default function AuthChecker() {
 
   return null; 
 }
+
 
 
 
