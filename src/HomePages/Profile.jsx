@@ -3,15 +3,14 @@ import React, { useEffect, useState } from "react";
 export default function Profile() {
   const [user, setUser] = useState(null);
 
-  // Fetch user data from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
 
     if (storedUser) {
-      setUser(JSON.parse(storedUser)); // Set user data from localStorage
+      setUser(JSON.parse(storedUser));
     } else {
       // Redirect to login page if no user is found
-      window.location.href = "/login";
+      window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
     }
   }, []);
 

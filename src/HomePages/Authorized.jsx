@@ -37,7 +37,7 @@ function Authorized() {
       .then((data) => {
         console.log("API Response:", data);
         dispatch(login()); 
-        navigate("/dashboard");
+        navigate("https://salmon-rock-00d71e400.6.azurestaticapps.net/dashboard");
       })
       .catch((error) => {
         console.error("Authorization failed:", error);
