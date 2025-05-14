@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // Pages
 import Authorized from "./HomePages/Authorized";
+import AuthChecker from "./HomePages/Authorized";
 import Dashboard from "./HomePages/userPages/Dashboard";
 
 function LandingPage() {
@@ -38,12 +39,15 @@ function LandingPage() {
 
 export default function App() {
   return (
+    <>
+    <AuthChecker />
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/dashboard" element={ <Dashboard />  } /> 
-      {/* <Route path="/dashboard"  element={ <ProtectedRoute>  <Dashboard />  </ProtectedRoute>}/> */}
-
-      </Routes>
+      <Route path="/authorized" element={<Authorized />} />
+      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      {/* Add other routes as needed */}
+    </Routes>
+  </>
   );
 }
 
