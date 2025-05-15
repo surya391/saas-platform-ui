@@ -5,6 +5,7 @@ import { getAuthToken } from "../utils/auth";
 import { loginSuccess } from "../slices/authSlice";
 
 export default function Authorized() {
+  console.log('getAuthTOken', getAuthToken)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -13,7 +14,6 @@ export default function Authorized() {
 
     if (token) {
       // const userData = JSON.parse(sessionStorage.getItem("user")) || { name: "User", email: "demo@example.com" };
-
       dispatch(loginSuccess());
       navigate("/dashboard");
     } else {
