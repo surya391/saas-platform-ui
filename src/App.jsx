@@ -8,7 +8,7 @@ import Home from "./HomePages/Home";
 import Plan from "./HomePages/Plan";
 import Features from "./HomePages/Features";
 import Footer from "./HomePages/Footer";
-// import Authorized from "./HomePages/Authorized"; 
+import Authorized from "./HomePages/Authorized"; 
 
 // Pages
 import Dashboard from "./HomePages/userPages/Dashboard";
@@ -47,7 +47,7 @@ export default function App() {
         }
       />
 
-    {/* <Route path="/authorized" element={<Authorized />} /> */}
+    <Route path="/authorized" element={<Authorized />} />
 
     </Routes>
   );
