@@ -47,7 +47,7 @@ export default function App() {
         }
       />
 
-<Route path="/authorized" element={<Authorized />} />
+    <Route path="/authorized" element={<Authorized />} />
 
     </Routes>
   );
