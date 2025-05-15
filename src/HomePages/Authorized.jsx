@@ -5,6 +5,8 @@ import { jwtDecode } from "jwt-decode";
  
 export default function Authorized() {
   console.log("Authorized called")
+  console.log("Authorized called2222")
+
   const location = useLocation();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
