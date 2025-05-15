@@ -1,84 +1,35 @@
 import React, { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getAuthToken } from "../utils/auth";
 import { loginSuccess } from "../slices/authSlice";
- 
+
 export default function Authorized() {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
- 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const code = params.get("code");
- 
-    if (code) {
-      fetch("https://saasssoapp.b2clogin.com/saasssoapp.onmicrosoft.com/b2c_1_signup_signin/oauth2/v2.0/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: new URLSearchParams({
-          grant_type: "authorization_code",
-          code: code,
-          client_id: "8384b874-43b1-489d-9947-28d1fd958233", 
-          redirect_uri: "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", 
-          scope: "openid profile offline_access"
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.id_token) {
-          localStorage.setItem("auth_token", data.id_token);
-          dispatch(loginSuccess({}));
-          navigate("/dashboard");
-        } else {
-          navigate("/", { replace: true });
-        }
-      });
-    } else {
-      navigate("/", { replace: true });
-    }
-  }, [location, navigate, dispatch]);
- 
+
+  // useEffect(() => {
+  //   const token = getAuthToken();
+  //       console.log("token", token)
+  //   if (token) {
+  //     // dispatch(loginSuccess({})); 
+  //     navigate("/dashboard");
+  //   } else {
+  //     navigate("https://www.google.com");
+  //   }
+  // }, [navigate, dispatch]);
+
+    useEffect(() => {
+    const token = getAuthToken();
+        console.log("token", token)
+    if (token) {
+       navigate("/dashboard");
+} else {
+  navigate('http://google.com')
+}
+  }, [navigate]);
   return <div>Authorizing...</div>;
 }
- 
-
-
-// import React, { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { getAuthToken } from "../utils/auth";
-// import { loginSuccess } from "../slices/authSlice";
-
-// export default function Authorized() {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-
-//   // useEffect(() => {
-//   //   const token = getAuthToken();
-//   //       console.log("token", token)
-//   //   if (token) {
-//   //     // dispatch(loginSuccess({})); 
-//   //     navigate("/dashboard");
-//   //   } else {
-//   //     navigate("https://www.google.com");
-//   //   }
-//   // }, [navigate, dispatch]);
-
-//     useEffect(() => {
-//     const token = getAuthToken();
-//         console.log("token", token)
-//     if (token) {
-//        navigate("/dashboard");
-// } else {
-//   navigate('http://google.com')
-// }
-//   }, [navigate]);
-//   return <div>Authorizing...</div>;
-// }
 
 
 
@@ -113,4 +64,137 @@ export default function Authorized() {
 
 //   return <div>Authorizing...</div>;
 // }
+
+
+
+// import React, { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+
+// export default function AuthChecker() {
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const getCookie = (name) => {
+//       const value = `; ${document.cookie}`;
+//       const parts = value.split(`; ${name}=`);
+//       if (parts.length === 2) return parts.pop().split(";").shift();
+//       return null;
+//     };
+
+//     const cookieToken = getCookie("token");
+//     const sessionToken = sessionStorage.getItem("id_token");
+
+//     if (!cookieToken && !sessionToken) {
+//       // Redirect to login page if no token is found
+//       navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login")
+//     } else {
+//       // Redirect to dashboard if authenticated
+//       navigate("/dashboard");
+//     }
+//   }, [navigate]);
+
+//   return null;
+// }
+
+
+
+
+// import React, { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+
+// export default function AuthChecker() {
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     // Check cookie
+//     // const cookieToken = document.cookie
+//     //   .split('; ')
+//     //   .find(row => row.startsWith('token='))
+//     //   ?.split('=')[1];
+
+//     // // Check sessionStorage
+//     // const sessionToken = sessionStorage.getItem("id_token");
+//     const getCookie = (name) => {
+//        const value = `; ${document.cookie}`; 
+//        const parts = value.split(`; ${name}=`); 
+//        if (parts.length === 2) return parts.pop().split(";").shift(); 
+//        return null; };
+//        const cookieToken = getCookie("token");
+//         const sessionToken = sessionStorage.getItem("id_token");
+//     if (!sessionToken && !cookieToken) {
+//       console.log("No token f ound, redirecting to login...");
+//       navigate("/dashboard") 
+//     }
+//   }, [navigate]);
+//   // if (cookieToken || sessionToken) {
+//   //   dispatch(setAuthenticated(true)); 
+//   //   navigate("/dashboard");
+//   // } else {
+//   //   window.location.href = "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login";
+//   //   console.log("No token found.");
+//   // }
+//   // }, [navigate]);
+
+//   return null;
+// }
+
+
+
+
+
+// import { useEffect } from "react";
+// import { useNavigate, useLocation } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import {login} from '../slices/authSlice'
+// function Authorized() {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     const searchParams = new URLSearchParams(location.search);
+//     const idToken = searchParams.get("token");
+
+//     if (!idToken) {
+//       console.error("No token found in URL");
+//       navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net");
+//       return;
+//     }
+
+//     // Save token to sessionStorage and optionally cookie
+//     sessionStorage.setItem("id_token", idToken);
+//     document.cookie = `token=${idToken}; path=/;`;
+
+//     // Verify token by calling backend
+//     fetch("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/authorized", {
+//       method: "GET",
+//       headers: {
+//         Authorization: `${idToken}`,
+//       },
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error(`Unauthorized access: ${response.status}`);
+//         }
+//         return response.json();
+//       })
+//       .then((data) => {
+//         console.log("API Response:", data);
+//         dispatch(login());
+//         navigate("/dashboard");
+//       })
+//       .catch((error) => {
+//         console.error("Authorization failed:", error);
+//         navigate("/error");
+//       });
+//   }, [location.search, navigate, dispatch]);
+
+//   return <div>Processing login, please wait...</div>;
+// }
+
+// export default Authorized;
+
+
+
+
 
