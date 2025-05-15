@@ -1,30 +1,10 @@
-import React, { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/user-dashboard", {
-      method: "GET",
-      credentials: "include", 
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Unauthorized");
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Fetched user data:", data);
-        setData(data);
-      })
-      .catch((err) => {
-        console.error("Error fetching dashboard data:", err);
-      });
-  }, []);
-
+  
   return (
     <>
       <h1>Dashboard</h1>
-      {data ? <p>Welcome, {data.name}</p> : <p>Loading user info...</p>}
+     
     </>
   );
 }

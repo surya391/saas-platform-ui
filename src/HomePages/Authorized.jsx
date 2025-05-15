@@ -1,33 +1,60 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getAuthToken } from "../utils/auth";
 import { loginSuccess } from "../slices/authSlice";
 
 export default function Authorized() {
-
-  console.log("loginSuccess",loginSuccess)
-
-  console.log('getAuthTOken', getAuthToken)
-
-  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const token = getAuthToken();
-
+        console.log("token", token)
     if (token) {
-      // const userData = JSON.parse(sessionStorage.getItem("user")) || { name: "User", email: "demo@example.com" };
-      dispatch(loginSuccess());
+      dispatch(loginSuccess({})); 
       navigate("/dashboard");
     } else {
-      navigate(`www.google.com`);
+      navigate("https://www.google.com");
     }
   }, [navigate, dispatch]);
 
   return <div>Authorizing...</div>;
 }
+
+
+
+
+// import { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import { getAuthToken } from "../utils/auth";
+// import { loginSuccess } from "../slices/authSlice";
+
+// export default function Authorized() {
+
+//   console.log("loginSuccess",loginSuccess)
+
+//   console.log('getAuthTOken', getAuthToken)
+
+  
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     const token = getAuthToken();
+
+//     if (token) {
+//       // const userData = JSON.parse(sessionStorage.getItem("user")) || { name: "User", email: "demo@example.com" };
+//       // dispatch(loginSuccess());
+//       navigate("/dashboard");
+//     } else {
+//       navigate(`www.google.com`);
+//     }
+//   }, [navigate]);
+
+//   return <div>Authorizing...</div>;
+// }
 
 
 
