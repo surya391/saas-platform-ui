@@ -1,72 +1,72 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+// import React, { useEffect, useState } from "react";
+// import { useLocation, useNavigate } from "react-router-dom";
+// import { jwtDecode } from "jwt-decode";
 
  
-export default function Authorized() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [error, setError] = useState(null);
+// export default function Authorized() {
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const [error, setError] = useState(null);
  
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const code = params.get("code");
+//   useEffect(() => {
+//     const params = new URLSearchParams(location.search);
+//     const code = params.get("code");
  
-    if (!code) {
-      setError("No code in URL.");
-      navigate("/", { replace: true });
-      return;
-    }
+//     if (!code) {
+//       setError("No code in URL.");
+//       navigate("/", { replace: true });
+//       return;
+//     }
  
-    const fetchTokens = async () => {
-      try {
-        const res = await fetch(
-          "https://saasssoapp.b2clogin.com/saasssoapp.onmicrosoft.com/b2c_1_signup_signin/oauth2/v2.0/token",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams({
-              grant_type: "authorization_code",
-              code: code,
-              client_id: "8384b874-43b1-489d-9947-28d1fd958233",
-              redirect_uri:
-                "https://happy-glacier-014cc2c00.6.azurestaticapps.net/authorized",
-              scope: "openid profile offline_access",
-            }),
-          }
-        );
+//     const fetchTokens = async () => {
+//       try {
+//         const res = await fetch(
+//           "https://saasssoapp.b2clogin.com/saasssoapp.onmicrosoft.com/b2c_1_signup_signin/oauth2/v2.0/token",
+//           {
+//             method: "POST",
+//             headers: {
+//               "Content-Type": "application/x-www-form-urlencoded",
+//             },
+//             body: new URLSearchParams({
+//               grant_type: "authorization_code",
+//               code: code,
+//               client_id: "8384b874-43b1-489d-9947-28d1fd958233",
+//               redirect_uri:
+//                 "https://happy-glacier-014cc2c00.6.azurestaticapps.net/authorized",
+//               scope: "openid profile offline_access",
+//             }),
+//           }
+//         );
  
-        const data = await res.json();
+//         const data = await res.json();
  
-        if (data.id_token) {
-          // Decode JWT to get user info
-          const user = jwtDecode(data.id_token);
+//         if (data.id_token) {
+//           // Decode JWT to get user info
+//           const user = jwtDecode(data.id_token);
  
-          // Save tokens in localStorage (or sessionStorage)
-          localStorage.setItem("id_token", data.id_token);
-          localStorage.setItem("access_token", data.access_token);
-          localStorage.setItem("refresh_token", data.refresh_token);
-          localStorage.setItem("user", JSON.stringify(user));
+//           // Save tokens in localStorage (or sessionStorage)
+//           localStorage.setItem("id_token", data.id_token);
+//           localStorage.setItem("access_token", data.access_token);
+//           localStorage.setItem("refresh_token", data.refresh_token);
+//           localStorage.setItem("user", JSON.stringify(user));
  
-          // Redirect to dashboard
-          navigate("/dashboard");
-        } else {
-          setError("Token exchange failed.");
-          console.error("Error:", data);
-        }
-      } catch (err) {
-        console.error("Token fetch error:", err);
-        setError("Network or token exchange error.");
-      }
-    };
+//           // Redirect to dashboard
+//           navigate("/dashboard");
+//         } else {
+//           setError("Token exchange failed.");
+//           console.error("Error:", data);
+//         }
+//       } catch (err) {
+//         console.error("Token fetch error:", err);
+//         setError("Network or token exchange error.");
+//       }
+//     };
  
-    fetchTokens();
-  }, [location, navigate]);
+//     fetchTokens();
+//   }, [location, navigate]);
  
-  return <div>{error ? `Error: ${error}` : "Authorizing..."}</div>;
-}
+//   return <div>{error ? `Error: ${error}` : "Authorizing..."}</div>;
+// }
 
 // import React, { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
