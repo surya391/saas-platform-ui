@@ -8,16 +8,28 @@ export default function Authorized() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   const token = getAuthToken();
+  //       console.log("token", token)
+  //   if (token) {
+  //     // dispatch(loginSuccess({})); 
+  //     navigate("/dashboard");
+  //   } else {
+  //     navigate("https://www.google.com");
+  //   }
+  // }, [navigate, dispatch]);
+  
   useEffect(() => {
-    const token = getAuthToken();
-        console.log("token", token)
-    if (token) {
-      dispatch(loginSuccess({})); 
-      navigate("/dashboard");
-    } else {
-      navigate("https://www.google.com");
-    }
-  }, [navigate, dispatch]);
+  const token = getAuthToken();
+  console.log("token", token);
+
+  if (token) {
+    navigate("/dashboard");
+  } else {
+    window.location.href = "https://www.google.com"; 
+  }
+}, [navigate]);
+
 
   return <div>Authorizing...</div>;
 }
