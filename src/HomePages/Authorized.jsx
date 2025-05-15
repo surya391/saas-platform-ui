@@ -1,31 +1,59 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getAuthToken } from "../utils/auth";
+import { loginSuccess } from "../slices/authSlice";
 
-export default function AuthChecker() {
+export default function Authorized() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getCookie = (name) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(";").shift();
-      return null;
-    };
+    const token = getAuthToken();
 
-    const cookieToken = getCookie("token");
-    const sessionToken = sessionStorage.getItem("id_token");
+    if (token) {
+      // const userData = JSON.parse(sessionStorage.getItem("user")) || { name: "User", email: "demo@example.com" };
 
-    if (!cookieToken && !sessionToken) {
-      // Redirect to login page if no token is found
-      navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login")
-    } else {
-      // Redirect to dashboard if authenticated
+      dispatch(loginSuccess());
       navigate("/dashboard");
+    } else {
+      navigate(`www.google.com`);
     }
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
-  return null;
+  return <div>Authorizing...</div>;
 }
+
+
+
+// import React, { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+
+// export default function AuthChecker() {
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const getCookie = (name) => {
+//       const value = `; ${document.cookie}`;
+//       const parts = value.split(`; ${name}=`);
+//       if (parts.length === 2) return parts.pop().split(";").shift();
+//       return null;
+//     };
+
+//     const cookieToken = getCookie("token");
+//     const sessionToken = sessionStorage.getItem("id_token");
+
+//     if (!cookieToken && !sessionToken) {
+//       // Redirect to login page if no token is found
+//       navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login")
+//     } else {
+//       // Redirect to dashboard if authenticated
+//       navigate("/dashboard");
+//     }
+//   }, [navigate]);
+
+//   return null;
+// }
 
 
 

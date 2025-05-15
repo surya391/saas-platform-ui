@@ -1,13 +1,10 @@
-// src/features/plans/plansSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from '../utils/axiosInstance'
-import  axios  from "axios";
-
+import axiosInstance from "../utils/axiosInstance";
 export const getPlans = createAsyncThunk(
-  "plans/getPlans",  
+  "plans/getPlans",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         "https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/v1/subcriptions"
       );
       return response.data;
@@ -18,9 +15,6 @@ export const getPlans = createAsyncThunk(
   }
 );
 
-  
-
-// 👇 Slice with reducers and async states
 const plansSlice = createSlice({
   name: "plans",
   initialState: {
@@ -40,7 +34,7 @@ const plansSlice = createSlice({
       })
       .addCase(getPlans.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload; 
       });
   },
 });

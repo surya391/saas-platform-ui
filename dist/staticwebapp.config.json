@@ -1,9 +1,16 @@
-
-  
 {
-    "navigationFallback": {
-      "rewrite": "/index.html",
-      "exclude": ["/api/*"]
+  "routes": [
+    {
+      "route": "/dashboard",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/authorized",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/*",
+      "rewrite": "/index.html"
     }
-  }
-  
+  ]
+}
