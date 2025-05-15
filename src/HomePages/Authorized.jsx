@@ -5,7 +5,12 @@ import { getAuthToken } from "../utils/auth";
 import { loginSuccess } from "../slices/authSlice";
 
 export default function Authorized() {
+
+  console.log("loginSuccess",loginSuccess)
+
   console.log('getAuthTOken', getAuthToken)
+
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

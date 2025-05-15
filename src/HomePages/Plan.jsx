@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import HomeImg from "./images/Home4.avif";
 
 export default function Plan() {
+
+  // console.log("getPlans", getPlans)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

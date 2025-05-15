@@ -6,7 +6,7 @@ import { getAuthToken } from "../utils/auth";
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const token = getAuthToken();
-
+console.log(token)
   if (!token || !isAuthenticated) {
     return <Navigate to="/" replace />;
   }
