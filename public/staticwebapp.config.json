@@ -1,13 +1,16 @@
 {
   "routes": [
     {
+      "route": "/dashboard",
+      "rewrite": "/index.html"
+    },
+    {
+      "route": "/authorized",
+      "rewrite": "/index.html"
+    },
+    {
       "route": "/*",
-      "serve": "/index.html",
-      "statusCode": 200
+      "rewrite": "/index.html"
     }
-  ],
-  "mimeTypes": {
-    ".js": "application/javascript",
-    ".css": "text/css"
-  }
+  ]
 }
