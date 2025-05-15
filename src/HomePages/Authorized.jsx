@@ -23,6 +23,8 @@ export default function Authorized() {
     const fetchTokens = async () => {
       try {
   console.log("Authorized called 44444")
+  console.log("process.env.REACT_APP_CLIENT_ID",process.env.REACT_APP_CLIENT_ID)
+  console.log("process.env.REACT_APP_CLIENT_SECRET",process.env.REACT_APP_CLIENT_SECRET)
 
         const res = await fetch(
           "https://saasssoapp.b2clogin.com/saasssoapp.onmicrosoft.com/b2c_1_signup_signin/oauth2/v2.0/token",
