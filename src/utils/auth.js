@@ -6,11 +6,9 @@ export const getCookie = (name) => {
   };
   
   export const getAuthToken = () => {
-    console.log(localStorage.getItem("auth_token"))
-    console.log(sessionStorage.getItem("id_token"))
-    console.log( 
-      getCookie("token")
-
+    console.log("localStorage",localStorage.getItem("auth_token"))
+    console.log("sessionStorage",sessionStorage.getItem("id_token"))
+    console.log("cookie", getCookie("token")
     )
     return (
       localStorage.getItem("auth_token") ||

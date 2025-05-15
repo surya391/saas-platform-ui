@@ -18,17 +18,17 @@ export default function Authorized() {
   //     navigate("https://www.google.com");
   //   }
   // }, [navigate, dispatch]);
-  
-  useEffect(() => {
-  const token = getAuthToken();
-  console.log("token", token);
 
-  if (token) {
-    navigate("/dashboard");
-  } else {
-    window.location.href = "https://www.google.com"; 
-  }
-}, [navigate]);
+    useEffect(() => {
+    const token = getAuthToken();
+        console.log("token", token)
+    if (token) {
+  navigate("/dashboard");
+} else {
+  navigate('http://google.com')
+}
+  }, [navigate]);
+
 
 
   return <div>Authorizing...</div>;
