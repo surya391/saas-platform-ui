@@ -1,19 +1,16 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-// import axiosInstance from "../utils/axiosInstance"
-import { toast } from 'react-toastify'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axiosInstance from '../utils/axiosInstance';
+import { toast } from 'react-toastify';
 
 // Async thunk for creating profile
 export const createProfile = createAsyncThunk(
   "post/createProfile",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/user`, formData, {
-        // headers: {
-        //   Authorization: localStorage.getItem('token'),
-        // },
-      });
+      const response = await axiosInstance.post(`/user`, formData);
       return response.data;
     } catch (error) {
+      console.error("Create Profile API Error:", error); // For debugging
       return rejectWithValue(error?.response?.data?.error || "Something went wrong");
     }
   }
@@ -21,30 +18,30 @@ export const createProfile = createAsyncThunk(
 
 // Slice for createProfile
 const createProfileSlice = createSlice({
-    name: "createProfile",
-    initialState: {
-        serverError: null,
-        userDetails: null,
-        isLoading: false,
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(createProfile.pending, (state) => {
-                state.serverError = null;
-                state.userDetails = null;
-                state.isLoading = true;
-            })
-            .addCase(createProfile.fulfilled, (state, action) => {
-                state.serverError = null;
-                state.userDetails = action.payload;
-                state.isLoading = false;
-            })
-            .addCase(createProfile.rejected, (state, action) => {
-                state.serverError = action.payload;
-                state.userDetails = null;
-                state.isLoading = false;
-            });
-    }
+  name: "createProfile",
+  initialState: {
+    serverError: null,
+    userDetails: null,
+    isLoading: false,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createProfile.pending, (state) => {
+        state.serverError = null;
+        state.userDetails = null;
+        state.isLoading = true;
+      })
+      .addCase(createProfile.fulfilled, (state, action) => {
+        state.serverError = null;
+        state.userDetails = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(createProfile.rejected, (state, action) => {
+        state.serverError = action.payload;
+        state.userDetails = null;
+        state.isLoading = false;
+      });
+  },
 });
 
 export default createProfileSlice.reducer;
