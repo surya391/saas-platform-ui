@@ -1,6 +1,9 @@
 // App.js
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "./slices/authSlice";
+import { getAuthToken } from "./utils/auth";
 
 // Landing page components
 import Navbar from "./HomePages/Navbar";
@@ -8,7 +11,7 @@ import Home from "./HomePages/Home";
 import Plan from "./HomePages/Plan";
 import Features from "./HomePages/Features";
 import Footer from "./HomePages/Footer";
-import Authorized from "./HomePages/Authorized"; 
+import Authorized from "./HomePages/Authorized";
 
 // Pages
 import Dashboard from "./HomePages/userPages/Dashboard";
@@ -35,6 +38,17 @@ function LandingPage() {
 }
 
 export default function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = getAuthToken();
+
+    if (user && token) {
+      dispatch(loginSuccess(user));
+    }
+  }, [dispatch]);
+
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
@@ -46,9 +60,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-
-    <Route path="/authorized" element={<Authorized />} />
-
+      <Route path="/authorized" element={<Authorized />} />
     </Routes>
   );
 }

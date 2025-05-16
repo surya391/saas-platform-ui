@@ -1,47 +1,80 @@
-import React, { useEffect } from "react";
-import { msalInstance } from "../msalInstance";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useMsal } from '@azure/msal-react';
+import { loginSuccess } from '../slices/authSlice';
 
-function Authorized() {
-  const navigate = useNavigate();
+const Authorized = () => {
+  const dispatch = useDispatch();
+  const { instance, accounts } = useMsal();
 
   useEffect(() => {
-    const checkAccount = async () => {
-      try {
-        console.log("Initializing MSAL instance...");
-        await msalInstance.initialize();
+    if (accounts && accounts.length > 0) {
+      const account = accounts[0];
 
-        console.log("Handling redirect promise...");
-        const response = await msalInstance.handleRedirectPromise();
-        console.log("response", response);
+      // Get ID token
+      const idToken = instance.getActiveAccount()?.idTokenClaims?.rawIdToken;
 
-        if (response) {
-          const { idToken, account } = response;
-          msalInstance.setActiveAccount(account);
-          localStorage.setItem("id_token", idToken);
-          localStorage.setItem("user", JSON.stringify(account));
-          navigate("/dashboard");
-        } else {
-          const accounts = msalInstance.getAllAccounts();
-          if (accounts.length > 0) {
-            msalInstance.setActiveAccount(accounts[0]);
-            navigate("/dashboard");
-          } else {
-            console.log("No redirect response and no accounts found.");
-          }
-        }
-      } catch (error) {
-        console.error("Redirect error:", error);
+      if (idToken) {
+        localStorage.setItem('id_token', idToken);
       }
-    };
 
-    checkAccount();
-  }, [navigate]);
+      localStorage.setItem('user', JSON.stringify(account));
 
-  return <div>Handling login...</div>;
-}
+      // Dispatch loginSuccess to Redux
+      dispatch(loginSuccess(account));
+    }
+  }, [accounts, dispatch, instance]);
+
+  return null;
+};
 
 export default Authorized;
+
+
+// import React, { useEffect } from "react";
+// import { msalInstance } from "../msalInstance";
+// import { useNavigate } from "react-router-dom";
+
+// function Authorized() {
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const checkAccount = async () => {
+//       try {
+//         console.log("Initializing MSAL instance...");
+//         await msalInstance.initialize();
+
+//         console.log("Handling redirect promise...");
+//         const response = await msalInstance.handleRedirectPromise();
+//         console.log("response", response);
+
+//         if (response) {
+//           const { idToken, account } = response;
+//           msalInstance.setActiveAccount(account);
+//           localStorage.setItem("id_token", idToken);
+//           localStorage.setItem("user", JSON.stringify(account));
+//           navigate("/dashboard");
+//         } else {
+//           const accounts = msalInstance.getAllAccounts();
+//           if (accounts.length > 0) {
+//             msalInstance.setActiveAccount(accounts[0]);
+//             navigate("/dashboard");
+//           } else {
+//             console.log("No redirect response and no accounts found.");
+//           }
+//         }
+//       } catch (error) {
+//         console.error("Redirect error:", error);
+//       }
+//     };
+
+//     checkAccount();
+//   }, [navigate]);
+
+//   return <div>Handling login...</div>;
+// }
+
+// export default Authorized;
 
 
 
@@ -160,69 +193,5 @@ export default Authorized;
 // }
 //   }, [navigate]);
 //   return <div>Authorizing...</div>;
-// }
-
-
-
-// import { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { getAuthToken } from "../utils/auth";
-// import { loginSuccess } from "../slices/authSlice";
-
-// export default function Authorized() {
-
-//   console.log("loginSuccess",loginSuccess)
-
-//   console.log('getAuthTOken', getAuthToken)
-
-  
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     const token = getAuthToken();
-
-//     if (token) {
-//       // const userData = JSON.parse(sessionStorage.getItem("user")) || { name: "User", email: "demo@example.com" };
-//       // dispatch(loginSuccess());
-//       navigate("/dashboard");
-//     } else {
-//       navigate(`www.google.com`);
-//     }
-//   }, [navigate]);
-
-//   return <div>Authorizing...</div>;
-// }
-
-
-
-// import React, { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// export default function AuthChecker() {
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const getCookie = (name) => {
-//       const value = `; ${document.cookie}`;
-//       const parts = value.split(`; ${name}=`);
-//       if (parts.length === 2) return parts.pop().split(";").shift();
-//       return null;
-//     };
-
-//     const cookieToken = getCookie("token");
-//     const sessionToken = sessionStorage.getItem("id_token");
-
-//     if (!cookieToken && !sessionToken) {
-//       // Redirect to login page if no token is found
-//       navigate("https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login")
-//     } else {
-//       // Redirect to dashboard if authenticated
-//       navigate("/dashboard");
-//     }
-//   }, [navigate]);
-
-//   return null;
 // }
 
