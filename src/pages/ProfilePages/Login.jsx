@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,18 +7,20 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Pre-filled form data
+  // ✅ Updated key: user_id instead of id
   const [formData, setFormData] = useState({
-    id: '123',
+    user_id: '123',
     name: 'Surya',
-    email: 'sury@gmail.com'
+    email: 'sury@gmail.com',
+    subscription_id: 0,
+    no_of_contacts: 0
   });
 
   const [clientErrors, setClientErrors] = useState({});
 
   const formValidate = () => {
     let errors = {};
-    if (!formData.id.trim()) errors.id = "ID is required";
+    if (!formData.user_id.trim()) errors.user_id = "User ID is required";
     if (!formData.name.trim()) errors.name = "Name is required";
     if (!formData.email.trim()) {
       errors.email = "Email is required";
@@ -39,10 +40,10 @@ function Login() {
       try {
         const result = await dispatch(createProfile(formData)).unwrap();
         console.log("Profile Created:", result);
-        navigate("/dashboard"); // or any success route
+        navigate("/dashboard");
       } catch (error) {
         console.error("Error creating profile:", error);
-        alert(error); // optional: show error toast or modal
+        alert(error);
       }
     }
   };
@@ -52,16 +53,17 @@ function Login() {
       <div className="bg-white p-8 rounded-md shadow-lg w-full max-w-md">
         <h2 className="text-2xl text-gray-800 mb-6 text-center">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* ID */}
+
+          {/* ✅ User ID */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">ID</label>
+            <label className="block text-gray-700 font-medium mb-1">User ID</label>
             <input
               type="text"
-              value={formData.id}
-              onChange={(e) => setFormData({ ...formData, id: e.target.value })}
+              value={formData.user_id}
+              onChange={(e) => setFormData({ ...formData, user_id: e.target.value })}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {clientErrors.id && <p className="text-sm text-red-500 mt-1">{clientErrors.id}</p>}
+            {clientErrors.user_id && <p className="text-sm text-red-500 mt-1">{clientErrors.user_id}</p>}
           </div>
 
           {/* Name */}
@@ -101,6 +103,7 @@ function Login() {
 }
 
 export default Login;
+
 
 
 
