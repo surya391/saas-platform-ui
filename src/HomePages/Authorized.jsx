@@ -3,7 +3,6 @@ import { msalInstance } from "../msalInstance";
 import { useNavigate } from "react-router-dom";
 
 function Authorized() {
-  console.log("Authorized called111");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,20 +13,22 @@ function Authorized() {
 
         console.log("Handling redirect promise...");
         const response = await msalInstance.handleRedirectPromise();
+        console.log("response", response);
 
         if (response) {
-          const idToken = response.idToken;
-          console.log("idToken", idToken);
-          const account = response.account;
+          const { idToken, account } = response;
           msalInstance.setActiveAccount(account);
-
-          // Save to localStorage
           localStorage.setItem("id_token", idToken);
           localStorage.setItem("user", JSON.stringify(account));
-
           navigate("/dashboard");
         } else {
-          console.warn("No redirect response found.");
+          const accounts = msalInstance.getAllAccounts();
+          if (accounts.length > 0) {
+            msalInstance.setActiveAccount(accounts[0]);
+            navigate("/dashboard");
+          } else {
+            console.log("No redirect response and no accounts found.");
+          }
         }
       } catch (error) {
         console.error("Redirect error:", error);
@@ -41,6 +42,7 @@ function Authorized() {
 }
 
 export default Authorized;
+
 
 
 
