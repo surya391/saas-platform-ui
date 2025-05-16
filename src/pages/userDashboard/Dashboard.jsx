@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPlans } from '../../slices/plansSlice';
 
 export default function Dashboard() {
+  console.log("getPlans", getPlans)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [activeTab, setActiveTab] = useState('profile'); // 'profile' or 'plans'
+  const [activeTab, setActiveTab] = useState('profile'); 
 
   const { items: plans, status } = useSelector((state) => state.plans);
 
