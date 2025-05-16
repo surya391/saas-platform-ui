@@ -1,13 +1,46 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 export default function Dashboard() {
-  
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Optional: clear auth tokens/cookies here
+    navigate('/login');
+  };
+
   return (
-    <>
-      <h1>Dashboard</h1>
-     
-    </>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
+      <div className="bg-white shadow-md rounded-xl w-full max-w-2xl p-6">
+        <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">Welcome to the Dashboard</h1>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <button
+            onClick={() => navigate('/profile')}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300"
+          >
+            Profile
+          </button>
+
+          <button
+            onClick={() => navigate('/plans')}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300"
+          >
+            Plans
+          </button>
+
+          <button
+            onClick={handleLogout}
+            className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
+
 
 
 
