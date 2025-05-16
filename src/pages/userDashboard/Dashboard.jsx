@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPlans } from '../../slices/plansSlice';
-import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [view, setView] = useState('home');
 
-  const { items: plans, status, error } = useSelector((state) => state.plans);
+  const [activeTab, setActiveTab] = useState('profile'); // 'profile' or 'plans'
+
+  const { items: plans, status } = useSelector((state) => state.plans);
 
   useEffect(() => {
-    if (view === 'plans' && status === 'idle') {
+    if (activeTab === 'plans') {
       dispatch(getPlans());
     }
-  }, [view, dispatch, status]);
+  }, [activeTab, dispatch]);
 
   const handleLogout = () => {
+    // Clear tokens/cookies if needed
     navigate('/login');
   };
 
@@ -27,20 +29,20 @@ export default function Dashboard() {
         <h1 className="text-2xl font-bold text-blue-700">My Dashboard</h1>
         <div className="flex gap-4">
           <button
-            onClick={() => setView('profile')}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-md"
+            onClick={() => setActiveTab('profile')}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
           >
             Profile
           </button>
           <button
-            onClick={() => setView('plans')}
-            className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-md"
+            onClick={() => setActiveTab('plans')}
+            className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
           >
             Plans
           </button>
           <button
             onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-5 rounded-md"
+            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
           >
             Logout
           </button>
@@ -48,37 +50,30 @@ export default function Dashboard() {
       </nav>
 
       {/* Main Content */}
-      <main className="p-8 text-center">
-        {view === 'home' && (
-          <p className="text-xl text-gray-700">Welcome to your personalized dashboard!</p>
-        )}
-
-        {view === 'profile' && (
-          <div className="max-w-xl mx-auto mt-6 bg-white shadow p-6 rounded-lg text-left">
-            <h2 className="text-2xl font-semibold text-blue-700 mb-4">User Profile</h2>
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Email:</strong> johndoe@example.com</p>
-            <p><strong>Role:</strong> Premium Member</p>
+      <main className="p-8">
+        {activeTab === 'profile' && (
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Profile</h2>
+            <p className="text-gray-600">Name: John Doe</p>
+            <p className="text-gray-600">Email: johndoe@example.com</p>
           </div>
         )}
 
-        {view === 'plans' && (
-          <div className="max-w-3xl mx-auto mt-6 text-left">
-            <h2 className="text-2xl font-semibold text-green-700 mb-4">Available Plans</h2>
+        {activeTab === 'plans' && (
+          <div>
+            <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">Available Plans</h2>
 
             {status === 'loading' ? (
-              <p>Loading plans...</p>
-            ) : status === 'failed' ? (
-              <p className="text-red-600">Error: {error}</p>
+              <p className="text-center text-gray-600">Loading plans...</p>
             ) : (
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {plans.map((plan) => (
                   <div key={plan._id || plan.id} className="bg-white shadow p-6 rounded-lg">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                    <p className="mb-2">{plan.description}</p>
-                    <p className="text-lg font-semibold text-green-700 mb-4">₹{plan.price}</p>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">{plan.plan_name}</h3>
+                    <p className="text-gray-600 mb-1"><strong>Price:</strong> ₹{plan.price}</p>
+                    <p className="text-gray-600 mb-4"><strong>No. of Contacts:</strong> {plan.no_of_contacts}</p>
                     <button
-                      onClick={() => alert(`Subscribed to ${plan.name}`)}
+                      onClick={() => alert(`Subscribed to ${plan.plan_name}`)}
                       className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md transition duration-300"
                     >
                       Subscribe
@@ -93,6 +88,7 @@ export default function Dashboard() {
     </div>
   );
 }
+
 
 
 
