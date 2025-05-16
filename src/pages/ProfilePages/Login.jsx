@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createProfile } from '../../slices/profileSlice';
 
 function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -24,15 +27,21 @@ function Login() {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = formValidate();
     if (Object.keys(errors).length > 0) {
       setClientErrors(errors);
     } else {
       setClientErrors({});
-      console.log("Submitted Data:", formData);
-      // Navigate or dispatch action here
+      try {
+        const result = await dispatch(createProfile(formData)).unwrap();
+        console.log("Profile Created:", result);
+        navigate("/dashboard"); // or any success route
+      } catch (error) {
+        console.error("Error creating profile:", error);
+        alert(error); // optional: show error toast or modal
+      }
     }
   };
 
