@@ -1,82 +1,47 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useMsal } from '@azure/msal-react';
-import { useNavigate } from 'react-router-dom';
-import { loginSuccess } from '../slices/authSlice';
+import React, { useEffect } from "react";
+import { msalInstance } from "../msalInstance";
+import { useNavigate } from "react-router-dom";
 
-const Authorized = () => {
-  const dispatch = useDispatch();
-  const { instance, accounts } = useMsal();
+function Authorized() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (accounts && accounts.length > 0) {
-      const account = accounts[0];
-      const idToken = instance.getActiveAccount()?.idTokenClaims?.rawIdToken;
+    const checkAccount = async () => {
+      try {
+        console.log("Initializing MSAL instance...");
+        await msalInstance.initialize();
 
-      if (idToken) {
-        localStorage.setItem('id_token', idToken);
+        console.log("Handling redirect promise...");
+        const response = await msalInstance.handleRedirectPromise();
+        console.log("response", response);
+
+        if (response) {
+          const { idToken, account } = response;
+          msalInstance.setActiveAccount(account);
+          localStorage.setItem("id_token", idToken);
+          localStorage.setItem("user", JSON.stringify(account));
+          navigate("/dashboard");
+        } else {
+          const accounts = msalInstance.getAllAccounts();
+          if (accounts.length > 0) {
+            msalInstance.setActiveAccount(accounts[0]);
+            navigate("/dashboard");
+          } else {
+            console.log("No redirect response and no accounts found.");
+          }
+        }
+      } catch (error) {
+        console.error("Redirect error:", error);
       }
+    };
 
-      localStorage.setItem('user', JSON.stringify(account));
-      dispatch(loginSuccess(account));
+    checkAccount();
+  }, [navigate]);
 
-      // 🔁 Navigate to dashboard after storing user
-      navigate('/dashboard');
-    }
-  }, [accounts, dispatch, instance, navigate]);
-
-  return null;
-};
+  return <div>Handling login...</div>;
+}
 
 export default Authorized;
-
-
-
-// import React, { useEffect } from "react";
-// import { msalInstance } from "../msalInstance";
-// import { useNavigate } from "react-router-dom";
-
-// function Authorized() {
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const checkAccount = async () => {
-//       try {
-//         console.log("Initializing MSAL instance...");
-//         await msalInstance.initialize();
-
-//         console.log("Handling redirect promise...");
-//         const response = await msalInstance.handleRedirectPromise();
-//         console.log("response", response);
-
-//         if (response) {
-//           const { idToken, account } = response;
-//           msalInstance.setActiveAccount(account);
-//           localStorage.setItem("id_token", idToken);
-//           localStorage.setItem("user", JSON.stringify(account));
-//           navigate("/dashboard");
-//         } else {
-//           const accounts = msalInstance.getAllAccounts();
-//           if (accounts.length > 0) {
-//             msalInstance.setActiveAccount(accounts[0]);
-//             navigate("/dashboard");
-//           } else {
-//             console.log("No redirect response and no accounts found.");
-//           }
-//         }
-//       } catch (error) {
-//         console.error("Redirect error:", error);
-//       }
-//     };
-
-//     checkAccount();
-//   }, [navigate]);
-
-//   return <div>Handling login...</div>;
-// }
-
-// export default Authorized;
 
 
 

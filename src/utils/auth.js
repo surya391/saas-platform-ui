@@ -6,10 +6,13 @@ export const getCookie = (name) => {
 };
 
 export const getAuthToken = () => {
+  console.log("localStorage", localStorage.getItem("auth_token"));
+  console.log("sessionStorage", sessionStorage.getItem("id_token"));
+  console.log("cookie", getCookie("token"));
+
   return (
-    localStorage.getItem('id_token') ||
-    localStorage.getItem('auth_token') || 
-    document.cookie.replace(/(?:(?:^|.*;\s*)auth_token\s*=\s*([^;]*).*$)|^.*$/, "$1")
+    localStorage.getItem("auth_token") ||
+    sessionStorage.getItem("id_token") ||
+    getCookie("token")
   );
 };
-
