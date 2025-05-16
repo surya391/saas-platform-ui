@@ -7,7 +7,6 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // ✅ Updated key: user_id instead of id
   const [formData, setFormData] = useState({
     user_id: '123',
     name: 'Surya',

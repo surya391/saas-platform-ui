@@ -20,6 +20,7 @@ const plansSlice = createSlice({
   initialState: {
     items: [],
     status: "idle",
+    loading: false,
     error: null,
   },
   reducers: {},
