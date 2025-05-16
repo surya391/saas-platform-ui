@@ -1,10 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPlans } from '../../slices/plansSlice';
 
 export default function Dashboard() {
-  console.log("getPlans", getPlans)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -13,10 +13,10 @@ export default function Dashboard() {
   const { items: plans, status } = useSelector((state) => state.plans);
 
   useEffect(() => {
-    if (activeTab === 'plans') {
+    if (activeTab === 'plans' && status === 'idle') {
       dispatch(getPlans());
     }
-  }, [activeTab, dispatch]);
+  }, [activeTab, dispatch, status]);
 
   const handleLogout = () => {
     // Clear tokens/cookies if needed
@@ -25,7 +25,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <nav className="bg-white shadow-md px-8 py-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-blue-700">My Dashboard</h1>
         <div className="flex gap-4">
@@ -50,7 +49,6 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      {/* Main Content */}
       <main className="p-8">
         {activeTab === 'profile' && (
           <div className="text-center">
@@ -89,6 +87,99 @@ export default function Dashboard() {
     </div>
   );
 }
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getPlans } from '../../slices/plansSlice';
+
+// export default function Dashboard() {
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
+
+//   const [activeTab, setActiveTab] = useState('profile'); 
+
+//   const { items: plans, status } = useSelector((state) => state.plans);
+
+//   useEffect(() => {
+//     if (activeTab === 'plans') {
+//       dispatch(getPlans());
+//     }
+//   }, [activeTab, dispatch]);
+
+//   const handleLogout = () => {
+//     // Clear tokens/cookies if needed
+//     navigate('/login');
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gray-50">
+//       {/* Navbar */}
+//       <nav className="bg-white shadow-md px-8 py-4 flex items-center justify-between">
+//         <h1 className="text-2xl font-bold text-blue-700">My Dashboard</h1>
+//         <div className="flex gap-4">
+//           <button
+//             onClick={() => setActiveTab('profile')}
+//             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
+//           >
+//             Profile
+//           </button>
+//           <button
+//             onClick={() => setActiveTab('plans')}
+//             className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
+//           >
+//             Plans
+//           </button>
+//           <button
+//             onClick={handleLogout}
+//             className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
+//           >
+//             Logout
+//           </button>
+//         </div>
+//       </nav>
+
+//       {/* Main Content */}
+//       <main className="p-8">
+//         {activeTab === 'profile' && (
+//           <div className="text-center">
+//             <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Profile</h2>
+//             <p className="text-gray-600">Name: John Doe</p>
+//             <p className="text-gray-600">Email: johndoe@example.com</p>
+//           </div>
+//         )}
+
+//         {activeTab === 'plans' && (
+//           <div>
+//             <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">Available Plans</h2>
+
+//             {status === 'loading' ? (
+//               <p className="text-center text-gray-600">Loading plans...</p>
+//             ) : (
+//               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+//                 {plans.map((plan) => (
+//                   <div key={plan._id || plan.id} className="bg-white shadow p-6 rounded-lg">
+//                     <h3 className="text-xl font-bold text-gray-800 mb-2">{plan.plan_name}</h3>
+//                     <p className="text-gray-600 mb-1"><strong>Price:</strong> ₹{plan.price}</p>
+//                     <p className="text-gray-600 mb-4"><strong>No. of Contacts:</strong> {plan.no_of_contacts}</p>
+//                     <button
+//                       onClick={() => alert(`Subscribed to ${plan.plan_name}`)}
+//                       className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md transition duration-300"
+//                     >
+//                       Subscribe
+//                     </button>
+//                   </div>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+//         )}
+//       </main>
+//     </div>
+//   );
+// }
 
 
 
