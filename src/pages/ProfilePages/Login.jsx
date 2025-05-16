@@ -83,14 +83,6 @@ function Login() {
           >
             Submit
           </button>
-
-          <button
-            type="button"
-            onClick={() => navigate('/changepassword')}
-            className="w-full py-2 mt-2 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-700 transition duration-300"
-          >
-            Update Password
-          </button>
         </form>
       </div>
     </div>
