@@ -6,36 +6,38 @@ function Authorized() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAccount = async () => {
-      try {
-        console.log("Initializing MSAL instance...");
-        await msalInstance.initialize();
+    // const checkAccount = async () => {
+    //   try {
+    //     console.log("Initializing MSAL instance...");
+    //     await msalInstance.initialize();
 
-        console.log("Handling redirect promise...");
-        const response = await msalInstance.handleRedirectPromise();
-        console.log("response", response);
+    //     console.log("Handling redirect promise...");
+    //     const response = await msalInstance.handleRedirectPromise();
+    //     console.log("response", response);
 
-        if (response) {
-          const { idToken, account } = response;
-          msalInstance.setActiveAccount(account);
-          localStorage.setItem("id_token", idToken);
-          localStorage.setItem("user", JSON.stringify(account));
-          navigate("/dashboard");
-        } else {
-          const accounts = msalInstance.getAllAccounts();
-          if (accounts.length > 0) {
-            msalInstance.setActiveAccount(accounts[0]);
-            navigate("/dashboard");
-          } else {
-            console.log("No redirect response and no accounts found.");
-          }
-        }
-      } catch (error) {
-        console.error("Redirect error:", error);
-      }
-    };
+    //     if (response) {
+    //       const { idToken, account } = response;
+    //       msalInstance.setActiveAccount(account);
+    //       localStorage.setItem("id_token", idToken);
+    //       localStorage.setItem("user", JSON.stringify(account));
+    //       navigate("/dashboard");
+    //     } else {
+    //       const accounts = msalInstance.getAllAccounts();
+    //       if (accounts.length > 0) {
+    //         msalInstance.setActiveAccount(accounts[0]);
+    //         navigate("/dashboard");
+    //       } else {
+    //         console.log("No redirect response and no accounts found.");
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.error("Redirect error:", error);
+    //   }
+    // };
 
-    checkAccount();
+    // checkAccount();
+    navigate('/dashboard')
+  
   }, [navigate]);
 
   return <div>Handling login...</div>;
