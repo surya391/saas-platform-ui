@@ -37,7 +37,7 @@ jobs:
           REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
           REACT_APP_CLIENT_SECRET: ${{ secrets.REACT_APP_CLIENT_SECRET }}
           REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
-        run: npm run build
+        
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
