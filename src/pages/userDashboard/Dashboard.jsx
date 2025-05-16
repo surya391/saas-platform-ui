@@ -10,36 +10,36 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       {/* Top Navbar */}
-      <nav className="bg-white shadow-md px-6 py-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-blue-700">Dashboard</h1>
-        <div className="flex space-x-4">
+      <nav className="bg-white shadow-md px-8 py-4 flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-blue-700">My Dashboard</h1>
+        <div className="flex gap-4">
           <button
             onClick={() => navigate('/profile')}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
           >
             Profile
           </button>
           <button
             onClick={() => navigate('/plans')}
-            className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
+            className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
           >
             Plans
           </button>
           <button
             onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
+            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-5 rounded-md transition duration-300"
           >
             Logout
           </button>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <div className="p-8 text-center">
+      {/* Main Dashboard Content */}
+      <main className="flex flex-col items-center justify-center h-full mt-20 px-4">
         <p className="text-xl text-gray-700">Welcome to your personalized dashboard!</p>
-      </div>
+      </main>
     </div>
   );
 }
