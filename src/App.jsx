@@ -11,8 +11,9 @@ import Footer from "./HomePages/Footer";
 import Authorized from "./HomePages/Authorized"; 
 
 // Pages
-import Dashboard from "./HomePages/userPages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/userDashboard/Dashboard";
+import Login from "./pages/ProfilePages/Login";
+// import ProtectedRoute from "./components/ProtectedRoute";
 
 function LandingPage() {
   return (
@@ -38,9 +39,9 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route
-        path="/dashboard"
-        element={
+    <Route path="/login" element={<Login />} />
+
+      <Route path="/dashboard"  element={
           // <ProtectedRoute>
             <Dashboard />
           // </ProtectedRoute>

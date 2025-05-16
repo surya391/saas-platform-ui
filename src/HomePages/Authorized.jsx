@@ -36,7 +36,7 @@ function Authorized() {
     // };
 
     // checkAccount();
-    navigate('/dashboard')
+    navigate('/login')
   
   }, [navigate]);
 
