@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMsal } from '@azure/msal-react';
+import { useNavigate } from 'react-router-dom';
 import { loginSuccess } from '../slices/authSlice';
 
 const Authorized = () => {
   const dispatch = useDispatch();
   const { instance, accounts } = useMsal();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
       const account = accounts[0];
-
-      // Get ID token
       const idToken = instance.getActiveAccount()?.idTokenClaims?.rawIdToken;
 
       if (idToken) {
@@ -19,16 +19,18 @@ const Authorized = () => {
       }
 
       localStorage.setItem('user', JSON.stringify(account));
-
-      // Dispatch loginSuccess to Redux
       dispatch(loginSuccess(account));
+
+      // 🔁 Navigate to dashboard after storing user
+      navigate('/dashboard');
     }
-  }, [accounts, dispatch, instance]);
+  }, [accounts, dispatch, instance, navigate]);
 
   return null;
 };
 
 export default Authorized;
+
 
 
 // import React, { useEffect } from "react";
