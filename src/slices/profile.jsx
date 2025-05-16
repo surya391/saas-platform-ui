@@ -7,7 +7,7 @@ export const createProfile = createAsyncThunk(
   "post/createProfile",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`profile/user`, formData, {
+      const response = await axiosInstance.post(`/user`, formData, {
         // headers: {
         //   Authorization: localStorage.getItem('token'),
         // },
