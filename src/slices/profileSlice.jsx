@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../utils/axiosInstance'; // for createProfile POST
-import axios from 'axios'; // for fetchUserProfile GET
+import axiosInstance from '../utils/axiosInstance'; // used for both POST and GET
 
 // Async thunk for creating profile
 export const createProfile = createAsyncThunk(
@@ -20,15 +19,14 @@ export const fetchUserProfile = createAsyncThunk(
   'profile/fetchUserProfile',
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/v1/profile/${userId}`
-      );
+      const response = await axiosInstance.get(`/profile/${userId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+
 
 const profileSlice = createSlice({
   name: 'profile',
