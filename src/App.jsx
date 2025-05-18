@@ -13,6 +13,7 @@ import Authorized from "./HomePages/Authorized";
 // Pages
 import Dashboard from "./pages/userDashboard/Dashboard";
 import Login from "./pages/ProfilePages/Login";
+import Profile from "./pages/ProfilePages/Profile"
 // import ProtectedRoute from "./components/ProtectedRoute";
 
 function LandingPage() {
@@ -49,6 +50,7 @@ export default function App() {
       />
 
     <Route path="/authorized" element={<Authorized />} />
+    <Route path="/profile/:user_id" element={<Profile />} />
 
     </Routes>
   );
