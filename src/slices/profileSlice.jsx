@@ -20,6 +20,7 @@ export const fetchUserProfile = createAsyncThunk(
   async (userId, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/profile/${userId}`);
+      console.log(response)
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
