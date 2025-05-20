@@ -54,12 +54,12 @@ export default function Plan() {
                 <li className="text-lg">Price: ₹{plan.price}</li>
                 <li className="text-lg">Contacts: {plan.no_of_contacts}</li>
               </ul>
-              <button
+              {/* <button
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 transform hover:scale-105"
                 onClick={() => handleSubscribe(plan)}
               >
                 Subscribe Now
-              </button>
+              </button> */}
             </div>
           ))}
       </div>
