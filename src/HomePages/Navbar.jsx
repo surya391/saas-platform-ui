@@ -66,9 +66,30 @@
 import React, { useState } from 'react';
 import FooterImg from './images/Footer.jpg';
 import { Link } from 'react-router-dom';
+
+import { useMsal, useIsAuthenticated } from '@azure/msal-react';
+// import { loginRequest } from './authConfig';
+// // import { logoutRequest } from './authConfig';
+import {  loginRequest } from '../utils/authConfig';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { instance, accounts } = useMsal();
+  // const isAuthenticated = useIsAuthenticated();
+  const [error, setError] = useState(null);
 
+  const handleLogin = () => {
+    instance.loginPopup(loginRequest).catch(e => {
+      console.error(e);
+      setError(e.message);
+    });
+  };
+
+  const handleLogout = () => {
+    instance.logoutPopup().catch(e => {
+      console.error(e);
+      setError(e.message);
+    });
+  };
   return (
     <nav
       className="relative flex items-center justify-between px-6 py-4 bg-blue-50 shadow-md"
@@ -89,12 +110,18 @@ export default function Navbar() {
         <a href="#features" className="text-white text-xl hover:text-blue-400">Features</a>
         <a href="#plans" className="text-white text-xl hover:text-blue-400">Plans</a>
         <a href="#home" className="text-white text-xl hover:text-blue-400">Home</a>
-        <Link
+        {/* <Link
           to="https://saas-app-aydbb8fhdtckecc7.centralindia-01.azurewebsites.net/login"
           className="block bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer"
         >
           Login
-        </Link>
+        </Link> */}
+        <button onClick={handleLogin}>Login</button>
+   {/* {error && (
+            <div style={{ marginTop: 20, color: 'red' }}>
+              <strong>Error:</strong> {error}
+            </div>
+          )} */}
       </div>
 
       {/* Mobile hamburger */}

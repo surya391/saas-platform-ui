@@ -18,6 +18,8 @@ import Login from "./pages/ProfilePages/Login";
 import DashboardProfile from "./pages/ProfilePages/DashboardProfile";
 import Profile from "./pages/ProfilePages/Profile";
 // import ProtectedRoute from "./components/ProtectedRoute";
+
+
 function LandingPage() {
   return (
     <div className="scroll-smooth">
@@ -39,6 +41,7 @@ function LandingPage() {
 }
 
 export default function App() {
+
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
